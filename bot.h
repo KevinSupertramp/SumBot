@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include <QThread>
+#include "ClientSession.h"
 
 class Bot : public QThread
 {
@@ -29,6 +30,8 @@ private:
     quint16 m_id;
     bool m_started;
     bool m_running;
+
+    ClientSession* m_session;
 };
 
 #endif // BOT_H
