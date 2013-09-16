@@ -32,6 +32,7 @@ public slots:
     void Start();
     void ThreadStarted();
     void ThreadStopped();
+    void BotLog(QString line) { qDebug() << line; Log(line); }
     
 private:
     Ui::MainWindow *ui;

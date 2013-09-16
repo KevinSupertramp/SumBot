@@ -1,31 +1,9 @@
 #include "ClientSession.h"
-
-QString HashPassword(QString password, QString hashKey)
-{
-    QString charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
-    QString passwordHash = "";
-
-    for (int i = 0; i < password.length(); i++)
-    {
-        char PPass = password[i].toLatin1();
-        char PKey = hashKey[i].toLatin1();
-
-        int APass = (int)PPass / 16;
-        int AKey = (int)PPass % 16;
-
-        int ANB = (APass + (int)PKey) % charset.length();
-        int ANB2 = (AKey + (int)PKey) % charset.length();
-
-        passwordHash += charset[ANB];
-        passwordHash += charset[ANB2];
-    }
-
-    return passwordHash;
-}
+#include "Utils/Util.h"
 
 void ClientSession::HandleHelloConnectionServer(QString& packet)
 {
-    m_hashKey = packet.right(2);
+    m_hashKey = packet.mid(2);
 
     WorldPacket data(CMSG_CLIENT_VERSION);
     data << "1.29.1";
@@ -42,19 +20,43 @@ void ClientSession::HandleHelloConnectionServer(QString& packet)
 
 void ClientSession::HandleRealmList(QString& packet)
 {
-    QString realmList = packet.right(2);
-    QStringList realmInfos = QStringList();
+    QStringList recvData = packet.mid(2).split("|");
+    QMap<quint8, sRealmInfos> realmsInfos;
 
-    if (realmList.contains("|"))
-        realmInfos = realmList.split("|").at(0).split(";");
-    else
-        realmInfos = realmList.split(";");
+    foreach (QString realmData, recvData)
+    {
+        QStringList realm = realmData.split(";");
+        sRealmInfos realmInfos;
 
-    sRealmInfos realmInfo;
-    realmInfo.realmId = (quint8)realmInfos.at(0).toUShort();
-    realmInfo.status = (quint8)realmInfos.at(1).toUShort();
-    realmInfo.completion = (quint8)realmInfos.at(2).toUShort(); // completion ??
-    realmInfo.canLogin = realmInfos.at(3).toUShort() == 1;
+        realmInfos.realmId = (quint8)realm.at(0).toUShort();
+        realmInfos.status = (quint8)realm.at(1).toUShort();
+        realmInfos.completion = (quint8)realm.at(2).toUShort(); // completion ??
+        realmInfos.canLogin = (quint8)realm.at(3).toUShort();
 
-    m_realmInfo = realmInfo;
+        realmsInfos[realmInfos.realmId] = realmInfos;
+    }
+
+    // Choix de l'ID du royaume dans fichier de config' ?
+    WorldPacket data(CMSG_REALM_INFOS);
+    data << realmsInfos.lowerBound(0).value().realmId;
+    SendPacket(data);
+}
+
+void ClientSession::HandleRealmInfos(QString& packet)
+{
+    QStringList recvData = packet.mid(3).split(";");
+    QStringList server = recvData.at(0).split(":");
+
+    QHostAddress address = QHostAddress(server.at(0));
+    quint16 port = (quint16)server.at(1).toUShort();
+    m_ticketKey = recvData.at(1);
+
+    ConnectToWorldServer(address, port);
+}
+
+void ClientSession::HandleHelloGameServer(QString& /*packet*/)
+{
+    WorldPacket data(MSG_TICKET);
+    data << m_ticketKey;
+    SendPacket(data);
 }

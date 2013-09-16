@@ -18,8 +18,11 @@ public:
     virtual void ProcessPacket(QString packet) = 0;
 
 public slots:
+    void OnConnect();
     void OnRead();
+    void OnDisconnect();
     virtual void OnClose();
+    virtual void OnError(QAbstractSocket::SocketError error) = 0;
 
 protected:
     QTcpSocket* m_socket;

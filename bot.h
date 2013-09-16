@@ -20,11 +20,13 @@ public:
     void SetRunning(bool running) { m_running = running; }
     bool IsRunning() { return m_running; }
 
+    void Log(QString line) { emit LogSignal(QString("[Bot " + QString::number(GetId()) + "] : ") + line); }
     void run();
 
 signals:
     void ThreadStarted(quint16 id, qint32 threadId);
     void ThreadStopped(quint16 id, qint32 threadId);
+    void LogSignal(QString line);
     
 private:
     quint16 m_id;

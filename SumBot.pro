@@ -22,13 +22,16 @@ SOURCES += main.cpp\
     Client/ClientSession.cpp \
     Network/Handlers/ServerHandler.cpp \
     Network/Handlers/QueueHandler.cpp \
-    Network/Handlers/AccountHandler.cpp
+    Network/Handlers/AccountHandler.cpp \
+    Utils/Util.cpp \
+    Network/Handlers/CharacterHandler.cpp
 
 HEADERS  += mainwindow.h \
     bot.h \
     Network/SocketHandler.h \
     Network/Opcodes/Opcodes.h \
     Network/Packets/WorldPacket.h \
-    Client/ClientSession.h
+    Client/ClientSession.h \
+    Utils/Util.h
 
 FORMS    += mainwindow.ui

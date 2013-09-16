@@ -31,6 +31,7 @@ void Bot::run()
     */
 
     m_session = new ClientSession(m_id);
+    m_session->SetBot(this);
 
     exec();
 

@@ -6,6 +6,11 @@ SocketHandler::SocketHandler()
     m_packet = "";
 }
 
+void SocketHandler::OnConnect()
+{
+    qDebug() << "Connected to host : " << m_socket->localAddress() << ":" << m_socket->localPort();
+}
+
 void SocketHandler::OnRead()
 {
     char *curChar = new char;
@@ -22,6 +27,11 @@ void SocketHandler::OnRead()
             m_packet = "";
         }
     }
+}
+
+void SocketHandler::OnDisconnect()
+{
+    qDebug() << "Disconnected from host : " << m_socket->localAddress() << ":" << m_socket->localPort();
 }
 
 void SocketHandler::OnClose()
