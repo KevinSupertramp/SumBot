@@ -67,7 +67,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Nom d'utilisateur : &lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;sumbot_ID (ID = numéro du bot)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Nom d'utilisateur : &lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;sumbotID (ID = numéro du bot)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="info_password">
@@ -156,13 +156,13 @@
       </rect>
      </property>
      <property name="text">
-      <string>Veuillez vérifier que vous avez bien créé les comptes : sumbot_1 à sumbot_</string>
+      <string>Veuillez vérifier que vous avez bien créé les comptes : sumbot0 à sumbot</string>
      </property>
     </widget>
     <widget class="QLabel" name="confirm_number_label">
      <property name="geometry">
       <rect>
-       <x>371</x>
+       <x>360</x>
        <y>18</y>
        <width>121</width>
        <height>21</height>

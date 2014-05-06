@@ -24,7 +24,10 @@ SOURCES += main.cpp\
     Network/Handlers/QueueHandler.cpp \
     Network/Handlers/AccountHandler.cpp \
     Utils/Util.cpp \
-    Network/Handlers/CharacterHandler.cpp
+    Network/Handlers/CharacterHandler.cpp \
+    Network/Handlers/MovementHandler.cpp \
+    Network/Handlers/MapHandler.cpp \
+    Network/Handlers/GameHandler.cpp
 
 HEADERS  += mainwindow.h \
     bot.h \

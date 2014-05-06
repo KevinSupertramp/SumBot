@@ -1,16 +1,19 @@
 #include "ClientSession.h"
 #include "bot.h"
 #include "Opcodes/Opcodes.h"
+#include "Utils/Util.h"
 
 ClientSession::ClientSession(quint8 botId) : SocketHandler()
 {
     m_bot = NULL;
     m_hashKey = QString();
-    m_username = "sumbot_" + QString::number(botId);
+    m_username = "sumbot" + QString::number(botId);
     m_pseudo = QString();
     m_ticketKey = QString();
     m_sessionKey = QString();
     m_connectedToWorld = false;
+
+    m_cellId = 0;
 
     m_socket = new QTcpSocket(this);
     m_socket->connectToHost(QHostAddress::LocalHost, (quint16)50885);
@@ -59,6 +62,35 @@ void ClientSession::ProcessPacket(QString packet)
         (this->*opcode.handler)(packet);
     else
         qDebug() << "Packet <" << header2 << "> is unhandled. Content : " << packet;
+}
+
+void ClientSession::RandomMove()
+{
+    if ((m_cellId % 3) == 0)
+        m_cellId += 3;
+    else
+        m_cellId -= 3;
+
+    WorldPacket data(MSG_GAME_ACTION);
+    data << "001"; // Moving
+    data << "h" << GetCellString(m_cellId);
+    SendPacket(data);
+
+    qDebug() << "Send RandomMove packet : " << data.GetPacket();
+
+    QEventLoop loop;
+    QTimer timer;
+
+    timer.setSingleShot(true);
+    connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
+    timer.start(2000); // wait 2sec
+    loop.exec();
+
+    // Lazyyyyy
+    WorldPacket data2(MSG_UNKNOWN_OPCODE);
+    data2 << "GKK0";
+    SendPacket(data2);
+    qDebug() << "Packet GKK sended";
 }
 
 void ClientSession::OnClose()

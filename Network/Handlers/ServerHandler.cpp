@@ -11,9 +11,12 @@ void ClientSession::HandleHelloConnectionServer(QString& packet)
 
     WorldPacket data2(CMSG_AUTHENTICATION);
     data2 << m_username;
-    data2 << "#1";
-    data2 << HashPassword(m_username, m_hashKey);
     SendPacket(data2);
+
+    WorldPacket data3(CMSG_AUTHENTICATION);
+    data3 << "#1";
+    data3 << HashPassword(m_username, m_hashKey);
+    SendPacket(data3);
 
     SendPacket(WorldPacket(MSG_QUEUE_POSITION));
 }

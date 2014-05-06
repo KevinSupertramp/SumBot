@@ -63,3 +63,11 @@ QString HashPassword(QString password, QString hashKey)
 
     return hashPassword;
 }
+
+QString GetCellString(quint16 cellId)
+{
+    quint16 charNumber2 = (quint16)cellId % charset.length();
+    quint16 charNumber1 = (quint16)(cellId - charNumber2) / charset.length();
+
+    return QString(charset.at(charNumber1)) + QString(charset.at(charNumber2));
+}

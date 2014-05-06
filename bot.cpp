@@ -17,19 +17,6 @@ Bot::~Bot()
 
 void Bot::run()
 {
-    /*while (IsRunning())
-    {
-        if (!IsStarted())
-        {
-            SetStarted(true);
-            emit ThreadStarted(m_id, (qint32)thread()->currentThreadId());
-        }
-    }
-
-    SetStarted(false);
-    emit ThreadStopped(m_id, (qint32)thread()->currentThreadId());
-    */
-
     m_session = new ClientSession(m_id);
     m_session->SetBot(this);
 

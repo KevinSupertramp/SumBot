@@ -22,16 +22,20 @@ OpcodeStruct opcodeTable[NUM_MSG_TYPES] =
     { "SMSG_ACCOUNT_PSEUDO",                        "Ad",       &ClientSession::HandleAccountPseudo },
     { "SMSG_ACCOUNT_SECRET_QUESTION",               "AQ",       &ClientSession::HandleNULL },
     { "SMSG_AUTHENTICATION_RESULT",                 "Al",       &ClientSession::HandleAuthenticationResult },
-    { "SMSG_CHAR_CREATE",                           "AA|",      &ClientSession::HandleCharCreate },
+    { "SMSG_CHAR_CREATE",                           "AAK",      &ClientSession::HandleCharCreate },
     { "SMSG_CHAR_LIST",                             "AL|",      &ClientSession::HandleCharList, },
+    { "SMSG_GAME_ACTION_FINISHED",                  "BN",       &ClientSession::HandleGameActionFinished },
     { "SMSG_HELLO_CONNECTION_SERVER",               "HC",       &ClientSession::HandleHelloConnectionServer },
     { "SMSG_HELLO_GAME_SERVER",                     "HG",       &ClientSession::HandleHelloGameServer },
+    { "SMSG_MAP_LOADED",                            "GDK",      &ClientSession::HandleMapLoaded },
+    { "SMSG_OBJECT_MOVEMENT",                       "GM",       &ClientSession::HandleObjectMovement },
     { "SMSG_REALM_INFOS",                           "AYK",      &ClientSession::HandleRealmInfos },
     { "SMSG_REALM_LIST",                            "AH",       &ClientSession::HandleRealmList, },
 
     // Client and server messages (MSG)
     { "MSG_CHAR_RANDOM_NAME",                       "AP",       &ClientSession::HandleCharRandomPseudo },
     { "MSG_CHAR_SELECT",                            "AS",       &ClientSession::HandleCharSelect },
+    { "MSG_GAME_ACTION",                            "GA",       &ClientSession::HandleGameAction },
     { "MSG_QUEUE_POSITION",                         "Af",       &ClientSession::HandleQueuePosition },
     { "MSG_TICKET",                                 "AT",       &ClientSession::HandleTicketResponse },
 };

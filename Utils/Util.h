@@ -11,6 +11,7 @@ QString GenerateRandomString(quint8 length);
 QString GenerateSessionKey();
 QString Checksum(QString value);
 QString HashPassword(QString password, QString hashKey);
+QString GetCellString(quint16 cellId);
 
 
 #endif

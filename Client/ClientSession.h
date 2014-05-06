@@ -26,6 +26,8 @@ public:
     void ConnectToWorldServer(QHostAddress address, quint16 port);
     virtual void ProcessPacket(QString packet);
 
+    void RandomMove();
+
     void HandleNULL(QString& /*packet*/) {}
     void HandleClientSide(QString& /*packet*/) {}
 
@@ -34,14 +36,18 @@ public:
     void HandleAuthenticationResult(QString& packet);
     void HandleCharCreate(QString& packet);
     void HandleCharList(QString& packet);
+    void HandleGameActionFinished(QString& packet);
     void HandleHelloConnectionServer(QString& packet);
     void HandleHelloGameServer(QString& packet);
+    void HandleMapLoaded(QString& packet);
+    void HandleObjectMovement(QString& packet);
     void HandleRealmInfos(QString& packet);
     void HandleRealmList(QString& packet);
 
     // MSG handlers
     void HandleCharRandomPseudo(QString& packet);
     void HandleCharSelect(QString& packet);
+    void HandleGameAction(QString& packet);
     void HandleQueuePosition(QString& packet);
     void HandleTicketResponse(QString& packet);
 
@@ -59,6 +65,8 @@ private:
     QString m_ticketKey;
     QString m_sessionKey;
     bool m_connectedToWorld;
+
+    quint16 m_cellId;
 };
 
 #endif // CLIENTSESSION_H
